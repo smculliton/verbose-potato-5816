@@ -10,10 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_29_140409) do
+ActiveRecord::Schema.define(version: 2022_10_31_151218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customer_items", force: :cascade do |t|
+    t.bigint "item_id"
+    t.bigint "customer_id"
+    t.index ["customer_id"], name: "index_customer_items_on_customer_id"
+    t.index ["item_id"], name: "index_customer_items_on_item_id"
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "departments", force: :cascade do |t|
+    t.string "name"
+    t.string "floor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "employee_tickets", force: :cascade do |t|
+    t.bigint "employee_id"
+    t.bigint "ticket_id"
+    t.index ["employee_id"], name: "index_employee_tickets_on_employee_id"
+    t.index ["ticket_id"], name: "index_employee_tickets_on_ticket_id"
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.string "name"
+    t.integer "level"
+    t.bigint "department_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_employees_on_department_id"
+  end
 
   create_table "items", force: :cascade do |t|
     t.string "name"
@@ -31,4 +67,16 @@ ActiveRecord::Schema.define(version: 2022_10_29_140409) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tickets", force: :cascade do |t|
+    t.string "subject"
+    t.integer "age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "customer_items", "customers"
+  add_foreign_key "customer_items", "items"
+  add_foreign_key "employee_tickets", "employees"
+  add_foreign_key "employee_tickets", "tickets"
+  add_foreign_key "employees", "departments"
 end
