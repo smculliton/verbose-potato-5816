@@ -1,0 +1,22 @@
+<h1><%= @customer.name %></h2>
+
+<h2>Items:</h2>
+
+<% @customer.items.each do |item| %>
+  <section id="item-<%= item.id %>">
+    <ul>
+      <li><%= item.name %>
+        <ul>
+          <li>Price: <%= item.price %></li>
+          <li>Market: <%= item.supermarket.name %></li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+<% end %>
+
+<%= form_with url: "/customers/#{@customer.id}", method: :patch, local: true do |f| %>
+  <%= f.label :item_id, 'Item ID' %>
+  <%= f.number_field :item_id %>
+  <%= f.submit 'Add Item' %>
+<% end %>
