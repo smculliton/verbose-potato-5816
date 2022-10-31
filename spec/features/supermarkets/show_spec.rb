@@ -1,10 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Supermarket, type: :model do
-  describe 'relationships' do
-    it { should have_many :items }
-  end
-
+RSpec.describe 'the Supermarket show page' do 
   before(:each) do 
     @mike = Customer.create!(name: 'Michael Myers')
     @freddie = Customer.create!(name: 'Freddie Krueger')
@@ -17,17 +13,19 @@ RSpec.describe Supermarket, type: :model do
 
     @mike.items << @wing
     @freddie.items << @eye 
+
+    visit "/supermarkets/#{@market1.id}"
   end
 
-  describe 'instance methods' do
-    describe '#customers' do 
-      it 'returns customers who have shopped at this market' do 
-        expect(@market1.customers).to eq([@mike, @freddie])
+  it 'shows a list of all customers that have shopped at this market' do
+    expect(page).to have_content(@mike.name)
+    expect(page).to have_content(@freddie.name)
+    expect(page).to_not have_content(@it.name)
 
-        @it.items << @eye 
+    @it.items << @wing
+    visit "/supermarkets/#{@market1.id}"
 
-        expect(@market1.customers).to eq([@mike, @freddie, @it])
-      end
-    end
+    expect(page).to have_content(@it.name)
+    save_and_open_page
   end
 end

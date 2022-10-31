@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   patch '/customers/:id', to: 'customers#update'
 
   get '/items', to: 'items#index'
+
+  get '/supermarkets/:id', to: 'supermarkets#show'
 end
