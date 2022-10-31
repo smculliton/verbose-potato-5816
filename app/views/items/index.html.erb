@@ -1,0 +1,15 @@
+<h1>Items Index</h1>
+
+<% @items.each do |item| %>
+  <section id="item-<%= item.id %>">
+    <ul>
+      <li><h2><%= item.name %></h2>
+        <ul>
+          <li>Price: <%= item.price %></li>
+          <li>Market: <%= item.supermarket.name %></li>
+          <li>Number of Customers: <%= item.customer_count %>
+        </ul>
+      </li>
+    </ul>
+  </section>
+<% end %>

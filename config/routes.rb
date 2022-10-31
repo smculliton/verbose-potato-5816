@@ -3,4 +3,6 @@ Rails.application.routes.draw do
 
   get '/customers/:id', to: 'customers#show'
   patch '/customers/:id', to: 'customers#update'
+
+  get '/items', to: 'items#index'
 end
